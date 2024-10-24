@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Server Info</title>
+</head>
+<body>
+  <h1>Game Server Info</h1>
+  <div id="server-info">Loading...</div>
+
+  <script>
+    async function fetchServerInfo() {
+      try {
+        const response = await fetch('http://localhost:3000/api/gameserver');
+        const data = await response.json();
+        document.getElementById('server-info').innerHTML = `
+          <p>Server Name: ${data.name}</p>
+          <p>Players: ${data.players.length} / ${data.maxplayers}</p>
+          <p>Map: ${data.map}</p>
+        `;
+      } catch (error) {
+        document.getElementById('server-info').innerText = 'Failed to load server info';
+      }
+    }
+
+    fetchServerInfo();
+  </script>
+</body>
+</html>
